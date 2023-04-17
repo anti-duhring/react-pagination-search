@@ -15,7 +15,6 @@ const data = [{id: 1, name: 'John'}, {id: 2, name: 'Doe'}, ...];
 
 function MyComponent() {
 
-
   return (
     <PaginationSearch
         data={data}
