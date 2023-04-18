@@ -48,8 +48,8 @@ var PaginationSearch = function (_a) {
         currentPage * itemsPerPage,
         (currentPage * itemsPerPage) + itemsPerPage
     ];
-    var pages = Math.round(dataFiltered.length / itemsPerPage);
-    var pageItems = new Array(pages).fill(0).map(function (_, index) { return index; });
+    var pages = Math.ceil(dataFiltered.length / itemsPerPage);
+    var pageItems = Array.from({ length: pages }, function (_, index) { return index; });
     var value = {
         initialData: data,
         data: dataFiltered,
@@ -59,6 +59,10 @@ var PaginationSearch = function (_a) {
         slice: slice,
         pageItems: pageItems,
     };
+    (0, react_1.useEffect)(function () {
+        setDataFiltered(data);
+        setCurrentPage(0);
+    }, [data]);
     return (react_1.default.createElement(exports.PaginationContext.Provider, { value: value },
         react_1.default.createElement("div", { className: 'pagination-container' }, children)));
 };

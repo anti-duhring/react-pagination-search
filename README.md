@@ -43,7 +43,11 @@ export default MyComponent;
 - `itemsPerPage`: The number of items to be displayed per page. Default: `10`.
 
 ## Sub-components
-- `PaginationSearch.Searchbox`: A search input component that filters the paginated data.
+- `PaginationSearch.Searchbox`: A search input component that filters the paginated data. It takes the following props:
+    - `placeholder`: A placeholder to be showed in the search bar, the default value is 
+    - `showSearchButton`: A boolean that indicates  whether the search button is displayed. Even if is displayed, you can still search by typing `enter` in the searchbar.
+    - `searchButton`: A custom component to be the search button. It already has the `value`, `onChange` and `onKeyDown` props.
+    - `searchInput`: A custom component to be the search input. It already has an onclick prop.
 - `PaginationSearch.Buttons`: A component that displays pagination buttons.
 - `PaginationSearch.Data`: This component renders the data for the current page. It takes the following props:
     - `render`: A function that takes an item from the data array and returns a React component to render that item.

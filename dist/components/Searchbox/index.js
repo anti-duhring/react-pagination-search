@@ -26,9 +26,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var react_1 = __importStar(require("react"));
 var PaginationSearch_1 = require("../../PaginationSearch");
 var Searchbox = function (_a) {
-    var _b = _a.placeholder, placeholder = _b === void 0 ? "Digite aqui..." : _b;
-    var _c = (0, react_1.useContext)(PaginationSearch_1.PaginationContext), initialData = _c.initialData, setData = _c.setData, setCurrentPage = _c.setCurrentPage;
-    var _d = (0, react_1.useState)(''), searchValue = _d[0], setSearchValue = _d[1];
+    var _b = _a.placeholder, placeholder = _b === void 0 ? "Type here..." : _b, _c = _a.showSearchButton, showSearchButton = _c === void 0 ? true : _c, SearchButton = _a.SearchButton, SearchInput = _a.SearchInput;
+    var _d = (0, react_1.useContext)(PaginationSearch_1.PaginationContext), initialData = _d.initialData, setData = _d.setData, setCurrentPage = _d.setCurrentPage;
+    var _e = (0, react_1.useState)(''), searchValue = _e[0], setSearchValue = _e[1];
     var search = function (e) {
         e.preventDefault();
         if (searchValue == '') {
@@ -46,14 +46,18 @@ var Searchbox = function (_a) {
         setCurrentPage(0);
         setData(dataFiltered);
     };
-    return (react_1.default.createElement("div", { className: "row pagination-searchbox-container" },
-        react_1.default.createElement("div", { className: "search-container" },
-            react_1.default.createElement("h4", { className: "list-title" }, "Pesquisar"),
-            react_1.default.createElement("div", { className: "search-container-input" },
-                react_1.default.createElement("input", { type: "text", className: "form-control pagination-searchbox", placeholder: placeholder, value: searchValue, onChange: function (e) { return setSearchValue(e.target.value); }, onKeyDown: function (e) { return e.key == 'Enter' ? search(e) : null; } }))),
-        react_1.default.createElement("div", { className: "button-container" },
-            react_1.default.createElement("button", { className: "button-full btn-save", onClick: search },
-                react_1.default.createElement("i", { className: "fa fa-search" }),
-                " Pesquisar"))));
+    return (react_1.default.createElement("div", { className: "pagination-searchbox-container" },
+        react_1.default.createElement("div", { className: "search-container-input" }, SearchInput ?
+            react_1.default.createElement(SearchInput, { value: searchValue, onChange: function (e) { return setSearchValue(e.target.value); }, onKeyDown: function (e) { return e.key == 'Enter' ? search(e) : null; } })
+            :
+                react_1.default.createElement("input", { type: "text", className: "search-input", placeholder: placeholder, value: searchValue, onChange: function (e) { return setSearchValue(e.target.value); }, onKeyDown: function (e) { return e.key == 'Enter' ? search(e) : null; } })),
+        showSearchButton &&
+            react_1.default.createElement(SearchButtonContainer, { Component: SearchButton, search: search })));
+};
+var SearchButtonContainer = function (_a) {
+    var Component = _a.Component, search = _a.search;
+    return (react_1.default.createElement("div", { className: "button-container" }, Component ?
+        react_1.default.createElement(Component, { onClick: search }) :
+        react_1.default.createElement("button", { className: "search-button", onClick: search }, "Search")));
 };
 exports.default = Searchbox;

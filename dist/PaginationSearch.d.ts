@@ -19,8 +19,11 @@ declare const PaginationSearch: {
     Data: ({ render }: {
         render: any;
     }) => JSX.Element;
-    Searchbox: ({ placeholder }: {
+    Searchbox: ({ placeholder, showSearchButton, SearchButton, SearchInput }: {
         placeholder?: string;
+        showSearchButton?: boolean;
+        SearchButton?: React.ElementType<any>;
+        SearchInput?: React.ElementType<any>;
     }) => JSX.Element;
 };
 export default PaginationSearch;

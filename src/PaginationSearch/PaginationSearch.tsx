@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 import Searchbox from './components/Searchbox';
 import ShowData from './components/ShowData';
 import PageButtonContainer from './components/PageButtonContainer';
@@ -35,8 +35,8 @@ const PaginationSearch = ({
         (currentPage * itemsPerPage) + itemsPerPage
     ]
 
-    const pages = Math.round(dataFiltered.length / itemsPerPage)
-    const pageItems = new Array(pages).fill(0).map((_, index) => index)
+    const pages = Math.ceil(dataFiltered.length / itemsPerPage)
+    const pageItems = Array.from({ length: pages }, (_, index) => index);
 
     const value = { 
         initialData: data,
@@ -47,6 +47,11 @@ const PaginationSearch = ({
         slice, 
         pageItems,
     }
+
+    useEffect(() => {
+        setDataFiltered(data);
+        setCurrentPage(0);
+      }, [data]);
 
     return (
         <PaginationContext.Provider value={value}>

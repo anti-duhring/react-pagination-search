@@ -1,9 +1,24 @@
-import React, { useContext, useState } from "react"
+import React, { Component, useContext, useState } from "react"
 import { PaginationContext } from "../../PaginationSearch"
 
+type TPropsSearchbox = {
+    placeholder?: string | null,
+    showSearchButton?: boolean,
+    SearchButton?: React.ElementType,
+    SearchInput?: React.ElementType
+}
+
+type TPropsSearchButtonContainer = {
+    Component: React.ElementType,
+    search: (e: any) => void
+}
+
 const Searchbox = ({
-    placeholder = "Digite aqui..."
-}) => {
+    placeholder = "Type here...",
+    showSearchButton = true,
+    SearchButton,
+    SearchInput
+}: TPropsSearchbox) => {
 
     const { 
         initialData, 
@@ -12,7 +27,7 @@ const Searchbox = ({
     } = useContext(PaginationContext)
     const [searchValue, setSearchValue] = useState('')
 
-    const search = (e: any) => {
+    const search = (e) => {
         e.preventDefault()
 
         if(searchValue == '') {
@@ -33,28 +48,50 @@ const Searchbox = ({
     }
 
     return (
-        <div className="row pagination-searchbox-container">
-            <div className="search-container">
-                <h4 className="list-title">Pesquisar</h4>
-            <div className="search-container-input">
-                <input
-                    type="text"
-                    className="form-control pagination-searchbox"
-                    placeholder={placeholder}
-                    value={searchValue}
-                    onChange={(e) => setSearchValue(e.target.value)}
-                    onKeyDown={(e) => e.key == 'Enter' ? search(e) : null}
-                />
-            </div>
-            </div>
-            <div className="button-container">
+        <div className="pagination-searchbox-container">
+                <div className="search-container-input">
+                    {
+                        SearchInput?
+                        <SearchInput
+                            value={searchValue}
+                            onChange={(e) => setSearchValue(e.target.value)}
+                            onKeyDown={(e) => e.key == 'Enter' ? search(e) : null}
+                        />
+                    : 
+                        <input
+                            type="text"
+                            className="search-input"
+                            placeholder={placeholder}
+                            value={searchValue}
+                            onChange={(e) => setSearchValue(e.target.value)}
+                            onKeyDown={(e) => e.key == 'Enter' ? search(e) : null}
+                        />
+                    }
+                </div>
+            
+                {showSearchButton && 
+                    <SearchButtonContainer
+                        Component={SearchButton}
+                        search={search}
+                    />
+                }
+            
+        </div>
+    )
+}
+
+const SearchButtonContainer = ({ Component, search }: TPropsSearchButtonContainer) => {
+    return (
+        <div className="button-container">
+            {Component? 
+                <Component onClick={search} />: 
                 <button
-                    className="button-full btn-save"
+                    className="search-button"
                     onClick={search}
                 >
-                    <i className="fa fa-search"></i> Pesquisar
+                    Search
                 </button>
-            </div>
+            }
         </div>
     )
 }
