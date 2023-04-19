@@ -4,12 +4,12 @@ import { PaginationContext } from "../../PaginationSearch"
 type TPropsSearchbox = {
     placeholder?: string | null,
     showSearchButton?: boolean,
-    SearchButton?: React.ElementType,
-    SearchInput?: React.ElementType
+    SearchButton?: React.ReactElement<React.InputHTMLAttributes<HTMLButtonElement>>,
+    SearchInput?: React.ReactElement<React.InputHTMLAttributes<HTMLInputElement>>
 }
 
 type TPropsSearchButtonContainer = {
-    Component: React.ElementType,
+    Component: React.ReactElement<React.InputHTMLAttributes<HTMLButtonElement>>,
     search: (e: any) => void
 }
 
@@ -52,11 +52,11 @@ const Searchbox = ({
                 <div className="search-container-input">
                     {
                         SearchInput?
-                        <SearchInput
-                            value={searchValue}
-                            onChange={(e) => setSearchValue(e.target.value)}
-                            onKeyDown={(e) => e.key == 'Enter' ? search(e) : null}
-                        />
+                        React.cloneElement(SearchInput, {
+                            value: searchValue,
+                            onChange: (e) => setSearchValue(e.target.value),
+                            onKeyDown: (e) => e.key == 'Enter' ? search(e) : null
+                        })
                     : 
                         <input
                             type="text"
@@ -84,7 +84,9 @@ const SearchButtonContainer = ({ Component, search }: TPropsSearchButtonContaine
     return (
         <div className="button-container">
             {Component? 
-                <Component onClick={search} />: 
+                React.cloneElement(Component, {
+                    onClick: search
+                }) :
                 <button
                     className="search-button"
                     onClick={search}
@@ -97,3 +99,4 @@ const SearchButtonContainer = ({ Component, search }: TPropsSearchButtonContaine
 }
 
 export default Searchbox
+

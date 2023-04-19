@@ -48,7 +48,11 @@ var Searchbox = function (_a) {
     };
     return (react_1.default.createElement("div", { className: "pagination-searchbox-container" },
         react_1.default.createElement("div", { className: "search-container-input" }, SearchInput ?
-            react_1.default.createElement(SearchInput, { value: searchValue, onChange: function (e) { return setSearchValue(e.target.value); }, onKeyDown: function (e) { return e.key == 'Enter' ? search(e) : null; } })
+            react_1.default.cloneElement(SearchInput, {
+                value: searchValue,
+                onChange: function (e) { return setSearchValue(e.target.value); },
+                onKeyDown: function (e) { return e.key == 'Enter' ? search(e) : null; }
+            })
             :
                 react_1.default.createElement("input", { type: "text", className: "search-input", placeholder: placeholder, value: searchValue, onChange: function (e) { return setSearchValue(e.target.value); }, onKeyDown: function (e) { return e.key == 'Enter' ? search(e) : null; } })),
         showSearchButton &&
@@ -57,7 +61,9 @@ var Searchbox = function (_a) {
 var SearchButtonContainer = function (_a) {
     var Component = _a.Component, search = _a.search;
     return (react_1.default.createElement("div", { className: "button-container" }, Component ?
-        react_1.default.createElement(Component, { onClick: search }) :
+        react_1.default.cloneElement(Component, {
+            onClick: search
+        }) :
         react_1.default.createElement("button", { className: "search-button", onClick: search }, "Search")));
 };
 exports.default = Searchbox;

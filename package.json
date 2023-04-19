@@ -1,6 +1,6 @@
 {
   "name": "react-pagination-search",
-  "version": "0.1.0",
+  "version": "0.4.0",
   "description": "react-pagination-search is a React library that provides a simple way to paginate and search through large amounts of data",
   "main": "dist/PaginationSearch.js",
   "scripts": {
